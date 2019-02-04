@@ -80,7 +80,9 @@ class terminalConnect:
 
 if __name__ == "__main__":
     yusuf = terminalConnect()
-    yusuf.get_requested_session("session3")
+    yusuf.get_requested_session("session4")
     yusuf.troya_entry("*r")
+
+
 
 
