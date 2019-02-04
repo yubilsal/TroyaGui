@@ -22,6 +22,13 @@ class terminalConnect:
             print("UNABLE TO DETECT SESSIONS.")                   #COULD NOT GET SESSION COUNT
             return 0
 
+    def get_sessions(self,sessionList):
+        ses_count = self.active_sessions_count()
+        index = 1
+        while index <= ses_count:
+            sessionList.append(str(self.System.Sessions(index)))
+            index += 1
+
     def get_requested_session(self,sessionName):
         global active_session
         self.ses_count = self.active_sessions_count()
@@ -75,7 +82,6 @@ class terminalConnect:
                 pass
         response = self.get_screenTroya()
         return response
-
 
 
 if __name__ == "__main__":

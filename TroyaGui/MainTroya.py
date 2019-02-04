@@ -1,10 +1,9 @@
-from PyQt5 import QtCore
-from PyQt5 import QtGui
 from PyQt5 import QtWidgets
 import sys
-#from connector import troya_connector
-from UIClass import Ui_MainWindow,Ui_Dialog
+from UIClass import Ui_MainWindow, Ui_Dialog
 import Terminal_Connector
+
+global t
 
 class Login(QtWidgets.QDialog, Ui_Dialog):
     def __init__(self, parent=None):
@@ -20,7 +19,10 @@ class Login(QtWidgets.QDialog, Ui_Dialog):
         self.listWidget.clear()
         if   self.comboBox.currentText()== "TERMINAL":
             print("TERMINAL SELECTED")
-            sessionList = ["ses1","ses2","ses3","ses4"]
+            sessionList = []
+            global t
+            t = Terminal_Connector.terminalConnect()
+            t.get_sessions(sessionList)
             for item in range (0,len(sessionList)):
                 self.listWidget.addItem(sessionList[item])
                 print(sessionList[item])
@@ -37,8 +39,8 @@ class MainUi(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.pushButton.clicked.connect(self.sendtroyaentry)
         self.pushButton.setShortcut("Return")
-        self.t = Terminal_Connector.terminalConnect()
-        self.t.get_requested_session("session4")
+#        self.t = Terminal_Connector.terminalConnect()
+        t.get_requested_session("session1")
 
     def sendtroyaentry(self):
         self.lineInput = self.lineEdit.text()
@@ -50,6 +52,7 @@ class MainUi(QtWidgets.QMainWindow, Ui_MainWindow):
         self.screenOutput = self.t.troya_entry("<GETSCREEN>")
         self.textBrowser.setText(self.screenOutput)
         self.lineEdit.clear()
+
 
 if __name__  == "__main__":
 
