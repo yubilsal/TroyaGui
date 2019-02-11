@@ -30,14 +30,13 @@ class Ui_Dialog(object):
         self.listWidget.setGeometry(QtCore.QRect(190, 10, 191, 121))
         self.listWidget.setObjectName("listWidget")
 
+
         self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept)
-        self.buttonBox.rejected.connect(Dialog.reject)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Connection"))
         self.comboBox.setItemText(0, _translate("Dialog", ""))
         self.comboBox.setItemText(1, _translate("Dialog", "TERMINAL"))
         self.comboBox.setItemText(2, _translate("Dialog", "TCP-IP"))
@@ -53,10 +52,8 @@ class Ui_MainWindow(object):
         self.pushButton.setGeometry(QtCore.QRect(30, 60, 75, 23))
         self.pushButton.setObjectName("pushButton")
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
+        self.textBrowser.setStyleSheet("QTextBrowser#textBrowser {background-color: gray; color: #aa0000; font-size: 14pt; font-weight: 490}")
         self.textBrowser.setGeometry(QtCore.QRect(190, 10, 801, 541))
-        font = QtGui.QFont()
-        font.setFamily("Courier New")
-        self.textBrowser.setFont(font)
         self.textBrowser.setObjectName("textBrowser")
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
         self.lineEdit.setGeometry(QtCore.QRect(20, 20, 113, 20))
@@ -83,6 +80,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton.setText(_translate("MainWindow", "DENEME_1"))
+        self.pushButton.setText(_translate("MainWindow", "SEND"))
         self.menuMENU.setTitle(_translate("MainWindow", "MENU"))
         self.actionexit.setText(_translate("MainWindow", "exit"))

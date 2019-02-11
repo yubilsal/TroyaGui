@@ -1,5 +1,5 @@
 import win32com.client
-
+import pywin
 
 
 class terminalConnect:
@@ -47,12 +47,13 @@ class terminalConnect:
         return False  # SESSION BULUNAMADI
 
     def get_screenTroya(self):
-        self.response = active_session.screen.GetStringEx(0, 0, 20, 80, 120, 0, 0, 0)
+        self.response = active_session.screen.GetStringEx(0, 0, 23, 80, 120, 0, 0, 0)
         self.response = self.response[:1840]
         self.response = '\n'.join(self.response[i:i + 80] for i in range(0, len(self.response), 80))
-        self.response = self.response.rstrip()
-        self.data_check = self.response.lstrip()
-        return self.data_check
+        # self.response = self.response.rstrip()
+        # self.data_check = self.response.lstrip()
+
+        return self.response
 
     def get_screenTSO(self):
         self.response = active_session.screen.GetStringEx(0, 0, 20, 80, 120, 0, 0, 0)
@@ -88,7 +89,6 @@ if __name__ == "__main__":
     yusuf = terminalConnect()
     yusuf.get_requested_session("session4")
     yusuf.troya_entry("*r")
-
 
 
 
