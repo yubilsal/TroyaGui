@@ -2,8 +2,7 @@ from PyQt5 import QtWidgets
 import sys
 from UIClass import Ui_MainWindow, Ui_Dialog
 import Terminal_Connector
-
-global t
+global terminal
 
 class Login(QtWidgets.QDialog, Ui_Dialog):
 
@@ -20,7 +19,7 @@ class Login(QtWidgets.QDialog, Ui_Dialog):
     def handleconnect(self):
 
         if self.selected:
-            t.get_requested_session(self.session)
+            terminal.get_requested_session(self.session)
             QtWidgets.QMessageBox.information(self, 'Connection', self.session + " connected ")
             self.accept()
 
@@ -41,6 +40,7 @@ class Login(QtWidgets.QDialog, Ui_Dialog):
             self.session = item.text()
             self.selected = True
 
+
     def selectionchange(self, i):
 
         self.listWidget.setHidden(True)
@@ -51,9 +51,9 @@ class Login(QtWidgets.QDialog, Ui_Dialog):
             self.listWidget.setVisible(True)
             print("TERMINAL SELECTED")
             sessionList = []
-            global t
-            t = Terminal_Connector.terminalConnect()
-            t.get_sessions(sessionList)
+            global terminal
+            terminal = Terminal_Connector.terminalConnect()
+            terminal.get_sessions(sessionList)
 
             for item in range (0,len(sessionList)):
                 self.listWidget.addItem(sessionList[item])
@@ -67,24 +67,38 @@ class MainUi(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(MainUi, self).__init__(parent)
         self.setupUi(self)
+        self.textBrowser.setText(terminal.troya_entry("<GETSCREEN>"))
         self.pushButton.clicked.connect(self.sendtroyaentry)
         self.pushButton.setShortcut("Return")
-        self.textBrowser.setText(t.troya_entry("<GETSCREEN>"))
+        self.pushButton1.clicked.connect(self.executeMacro)
+        self.actionexit.triggered.connect(self.close)
 
     def sendtroyaentry(self):
+
         self.lineInput = self.lineEdit.text()
         self.textBrowser.textCursor()
         if self.lineInput != "":
-            t.troya_entry(self.lineInput)
+            terminal.troya_entry(self.lineInput)
         else:
             pass
-        self.screenOutput = t.troya_entry("<GETSCREEN>")
+        self.screenOutput = terminal.troya_entry("<GETSCREEN>")
         self.textBrowser.setText(self.screenOutput)
         self.lineEdit.clear()
 
+    def executeMacro(self):
+
+        text = self.comboBox1.currentText()
+        imps  = 'from functions import %s' %text
+        exc   = "%s.main(terminal)" %text
+
+        try:
+            exec(imps)
+            exec(exc)
+        except:
+            pass
+
 
 if __name__  == "__main__":
-
     UIClass = QtWidgets.QApplication(sys.argv)
     Login = Login()
     Login.exec_()

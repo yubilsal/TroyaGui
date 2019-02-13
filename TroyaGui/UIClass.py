@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 #C:\Users\y_saldamli\PycharmProjects\untitled\venv\Scripts>
-
+import os
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Dialog(object):
@@ -51,8 +51,16 @@ class Ui_MainWindow(object):
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(30, 60, 75, 23))
         self.pushButton.setObjectName("pushButton")
+        self.comboBox1 = QtWidgets.QComboBox(MainWindow)
+        self.comboBox1.setGeometry(QtCore.QRect(30, 120, 75, 23))
+        # self.comboBox1.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContents)
+        self.comboBox1.setObjectName("comboBox")
+        self.comboBox1.addItem("")
+        self.pushButton1 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton1.setGeometry(QtCore.QRect(30, 143, 75, 23))
+        self.pushButton1.setObjectName("pushButton1")
         self.textBrowser = QtWidgets.QTextBrowser(self.centralwidget)
-        self.textBrowser.setStyleSheet("QTextBrowser#textBrowser {background-color: gray; color: #aa0000; font-size: 14pt; font-weight: 490}")
+        self.textBrowser.setStyleSheet("QTextBrowser#textBrowser {background-color: #D1EFFF; color: #000989; font-size: 14pt; font-weight: 480}")
         self.textBrowser.setGeometry(QtCore.QRect(190, 10, 801, 541))
         self.textBrowser.setObjectName("textBrowser")
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
@@ -81,5 +89,10 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton.setText(_translate("MainWindow", "SEND"))
+        self.pushButton1.setText(_translate("MainWindow", "EXC"))
         self.menuMENU.setTitle(_translate("MainWindow", "MENU"))
         self.actionexit.setText(_translate("MainWindow", "exit"))
+        functionList = os.listdir("functions")
+        for i in range(0,len(functionList)-1):
+            self.comboBox1.addItem(_translate("MainWindow", functionList[i][0:-3]))
+
