@@ -1,77 +1,72 @@
 import win32com.client
-import pywin
 
 
-class terminalConnect:
+class TerminalConnector:
 
-    def __init__(self):                                           #INITIALIZE OBJECTS
-
-        self.SYSTEM = "UNKNOWN"                                   #INITIAL STATUS
-        self.System = win32com.client.Dispatch("EXTRA.System")    #GET ATTACHMATE EXTRA OBJECT
+    def __init__(self):
+        self.SYSTEM = "UNKNOWN"                                     # Set initial status
+        self.System = win32com.client.Dispatch("EXTRA.System")      # Get Attachmate Extra Object
         self.timeout = 10000
         self.counter = 0
 
-    def active_sessions_count(self):
+    def get_session_count(self):
         try:
-            self.session_count = self.System.Sessions.count       #GET SESSION COUNT
-            if self.session_count == 0:
-                print("NO ACTIVE SESSION.")                       #NO ACTIVE SESSION PRESENT
+            if self.System.Sessions.count == 0:
+                print("NO ACTIVE SESSION.")                         # No active session is present
                 return 0
-            return self.session_count                             #RETURN SESSION COUNT
-        except:
-            print("UNABLE TO DETECT SESSIONS.")                   #COULD NOT GET SESSION COUNT
+            return self.System.Sessions.count                       # Return session count
+        except Exception:
+            print("UNABLE TO DETECT SESSIONS.")                     # Error during session count
             return 0
 
-    def get_sessions(self,sessionList):
-        ses_count = self.active_sessions_count()
+    def get_session_list(self):
+        session_count = self.get_session_count()
         index = 1
-        while index <= ses_count:
-            sessionList.append(str(self.System.Sessions(index)))
+        session_list = []
+        while index <= session_count:
+            session_list.append(str(self.System.Sessions(index)))
             index += 1
+        return session_list
 
-    def get_requested_session(self,sessionName):
+    def connect_session(self, sessionName):
         global active_session
-        self.ses_count = self.active_sessions_count()
-        self.index = 1
+        index = 1
         print("AVAILABLE SESSIONS: ")
-        while self.index <= self.ses_count:
-            Current_Session_Name = self.System.Sessions(self.index)
-            print(self.System.Sessions(self.index))
-            if str(Current_Session_Name) == sessionName:
-                #print(str(Current_Session_Name))
-                active_session = self.System.Sessions(self.index)
+        while index <= self.get_session_count():
+            print(self.System.Sessions(index))
+            if str(self.System.Sessions(index)) == sessionName:
+                active_session = self.System.Sessions(index)
                 print("ACTIVE SESSION CHANGED TO ===> " + str(active_session))
                 return True
                 break
-            self.index +=  1
-        return False  # SESSION BULUNAMADI
+            index += 1
+        return False                                                # Requested session is not found
 
-    def get_screenTroya(self):
-        self.response = active_session.screen.GetStringEx(0, 0, 23, 80, 120, 0, 0, 0)
-        self.response = self.response[:1840]
-        self.response = '\n'.join(self.response[i:i + 80] for i in range(0, len(self.response), 80))
+    def get_screen_troya(self):
+        response = active_session.screen.GetStringEx(0, 0, 23, 80, 120, 0, 0, 0)
+        response = response[:1840]
+        response = '\n'.join(response[i:i + 80] for i in range(0, len(response), 80))
         # self.response = self.response.rstrip()
         # self.data_check = self.response.lstrip()
+        return response
 
-        return self.response
-
-    def get_screenTSO(self):
-        self.response = active_session.screen.GetStringEx(0, 0, 20, 80, 120, 0, 0, 0)
-        self.response = self.response[:1840]
-        self.response = '\n'.join(self.response[i:i + 80] for i in range(0, len(self.response), 80))
-        self.response = self.response.rstrip()
-        self.data_check = self.response.lstrip()
-        return self.data_check
+    # def get_screen_tso(self):
+    #     self.response = active_session.screen.GetStringEx(0, 0, 20, 80, 120, 0, 0, 0)
+    #     self.response = self.response[:1840]
+    #     self.response = '\n'.join(self.response[i:i + 80] for i in range(0, len(self.response), 80))
+    #     self.response = self.response.rstrip()
+    #     self.data_check = self.response.lstrip()
+    #     return self.data_check
 
     def troya_entry(self,data):
 
-        if ("<GETSCREEN>" in data):
+        if "<GETSCREEN>" in data:
             pass
-        elif ("<CLEAR>" in data):
+        elif "<CLEAR>" in data:
             active_session.Screen.Sendkeys("<CLEAR>")
-        elif ("<ENTER>" in data):
+        elif "<ENTER>" in data:
             active_session.Screen.Sendkeys(str(data))
-        elif ("<TAB>" in data):
+        elif "<TAB>" in data:
             active_session.Screen.Sendkeys(str(data))
         else:
             active_session.Screen.Sendkeys(str(data) + "<ENTER>")
@@ -81,14 +76,5 @@ class terminalConnect:
             if self.counter > self.timeout:
                 print("ekrandan data alınamadı")
                 pass
-        response = self.get_screenTroya()
+        response = self.get_screen_troya()
         return response
-
-
-if __name__ == "__main__":
-    yusuf = terminalConnect()
-    yusuf.get_requested_session("session4")
-    yusuf.troya_entry("*r")
-
-
-

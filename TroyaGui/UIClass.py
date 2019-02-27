@@ -1,14 +1,6 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'untitled.ui'
-#
-# Created by: PyQt5 UI code generator 5.11.3
-#
-# WARNING! All changes made in this file will be lost!
-
-#C:\Users\y_saldamli\PycharmProjects\untitled\venv\Scripts>
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Dialog(object):
     def setupUiD(self, Dialog):
@@ -29,7 +21,6 @@ class Ui_Dialog(object):
         self.listWidget = QtWidgets.QListWidget(Dialog)
         self.listWidget.setGeometry(QtCore.QRect(190, 10, 191, 121))
         self.listWidget.setObjectName("listWidget")
-
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -93,6 +84,6 @@ class Ui_MainWindow(object):
         self.menuMENU.setTitle(_translate("MainWindow", "MENU"))
         self.actionexit.setText(_translate("MainWindow", "exit"))
         functionList = os.listdir("functions")
-        for i in range(0,len(functionList)-1):
-            self.comboBox1.addItem(_translate("MainWindow", functionList[i][0:-3]))
-
+        for i in range(0,len(functionList)):
+            if functionList[i][-3:] == ".py":
+                self.comboBox1.addItem(_translate("MainWindow", functionList[i][0:-3]))
