@@ -31,12 +31,12 @@ class TerminalConnector:
     def connect_session(self, sessionName):
         global active_session
         index = 1
-        print("AVAILABLE SESSIONS: ")
+        # print("AVAILABLE SESSIONS: ")
         while index <= self.get_session_count():
-            print(self.System.Sessions(index))
+            # print(self.System.Sessions(index))
             if str(self.System.Sessions(index)) == sessionName:
                 active_session = self.System.Sessions(index)
-                print("ACTIVE SESSION CHANGED TO ===> " + str(active_session))
+                # print("ACTIVE SESSION CHANGED TO ===> " + str(active_session))
                 return True
                 break
             index += 1

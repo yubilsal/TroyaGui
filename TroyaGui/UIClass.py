@@ -18,8 +18,11 @@ class Ui_Dialog(object):
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
+        self.label = QtWidgets.QLabel(Dialog)
+        self.label.setText("Available sessions")
+        self.label.move(200, 10)
         self.listWidget = QtWidgets.QListWidget(Dialog)
-        self.listWidget.setGeometry(QtCore.QRect(190, 10, 191, 121))
+        self.listWidget.setGeometry(QtCore.QRect(190, 30, 191, 121))
         self.listWidget.setObjectName("listWidget")
 
         self.retranslateUi(Dialog)

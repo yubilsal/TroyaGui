@@ -15,6 +15,7 @@ class Login(QtWidgets.QDialog, Ui_Dialog):
         self.comboBox.currentIndexChanged.connect(self.selection_change)
         self.listWidget.itemClicked.connect(self.show_session_list)
         self.listWidget.setHidden(True)
+        self.label.setHidden(True)
         self.buttonBox.accepted.connect(self.handle_connection)
         self.buttonBox.rejected.connect(self.reject)
 
@@ -25,17 +26,20 @@ class Login(QtWidgets.QDialog, Ui_Dialog):
 
     def selection_change(self):
         self.listWidget.setHidden(True)
+        self.label.setHidden(True)
         self.listWidget.clear()
         if self.comboBox.currentText() == "TERMINAL":
             self.listWidget.setVisible(True)
-            print("TERMINAL SELECTED")
+            self.label.setVisible(True)
+#            print("TERMINAL SELECTED")
             global terminal
             terminal = Terminal_Connector.TerminalConnector()
             sessionList = terminal.get_session_list()
             for item in range(0, len(sessionList)):
                 self.listWidget.addItem(sessionList[item])
         elif self.comboBox.currentText() == "TCP-IP":
-            print("TCP-IP SELECTED")
+            pass
+#            print("TCP-IP SELECTED")
 
     def handle_connection(self):
         if self.sessionSelected:
