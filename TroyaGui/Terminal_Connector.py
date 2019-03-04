@@ -43,8 +43,8 @@ class TerminalConnector:
         return False                                                # Requested session is not found
 
     def get_screen_troya(self):
-        response = active_session.screen.GetStringEx(0, 0, 23, 80, 120, 0, 0, 0)
-        response = response[:1840]
+        response = active_session.screen.GetStringEx(0, 0, 24, 80, 120, 0, 0, 0)
+        response = response[:1920]
         response = '\n'.join(response[i:i + 80] for i in range(0, len(response), 80))
         # self.response = self.response.rstrip()
         # self.data_check = self.response.lstrip()
