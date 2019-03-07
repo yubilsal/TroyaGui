@@ -1,7 +1,5 @@
 # TroyaGUI
 
-![troyagui](https://github.com/yubilsal/TroyaGui/blob/master/troyagui.gif)
-
 ## Development setup
 Python packages
 ```sh
