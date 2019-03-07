@@ -1,6 +1,6 @@
 # TroyaGUI
 
-![troyagui](TroyaGui/troyagui.gif)
+![troyagui](https://github.com/yubilsal/TroyaGui/troyagui.gif)
 
 ## Development setup
 Python packages
