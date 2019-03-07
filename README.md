@@ -1,4 +1,7 @@
 # TroyaGUI
+
+![troyagui](TroyaGui/troyagui.gif)
+
 ## Development setup
 Python packages
 ```sh
