@@ -50,6 +50,12 @@ class TerminalConnector:
         # self.data_check = self.response.lstrip()
         return response
 
+    def get_screen_troya2(self):
+        response = active_session.screen.GetStringEx(0, 0, 22, 80, 120, 0, 0, 0)
+        response = response[:1760]
+        response = '\n'.join(response[i:i + 80] for i in range(0, len(response), 80))
+        return response
+
     # def get_screen_tso(self):
     #     self.response = active_session.screen.GetStringEx(0, 0, 20, 80, 120, 0, 0, 0)
     #     self.response = self.response[:1840]

@@ -14,8 +14,8 @@ class Login(QtWidgets.QDialog, Ui_Dialog):
         self.setupUiD(self)
         self.comboBox.currentIndexChanged.connect(self.selection_change)
         self.listWidget.itemClicked.connect(self.show_session_list)
-        self.listWidget.setHidden(True)
-        self.label.setHidden(True)
+        self.listWidget.setVisible(False)
+        self.label.setVisible(False)
         self.buttonBox.accepted.connect(self.handle_connection)
         self.buttonBox.rejected.connect(self.reject)
 
@@ -25,8 +25,8 @@ class Login(QtWidgets.QDialog, Ui_Dialog):
             self.sessionSelected = True
 
     def selection_change(self):
-        self.listWidget.setHidden(True)
-        self.label.setHidden(True)
+        self.listWidget.setVisible(False)
+        self.label.setVisible(False)
         self.listWidget.clear()
         if self.comboBox.currentText() == "TERMINAL":
             self.listWidget.setVisible(True)
