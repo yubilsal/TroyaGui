@@ -78,7 +78,7 @@ class MainUi(QtWidgets.QMainWindow, Ui_MainWindow):
     def execute_macro(self):
         text = self.comboBox1.currentText()
         imps = 'from functions import %s' % text
-        exc = "%s.main(terminal)" % text
+        exc = "%s.main(terminal, mainGui)" % text
 
         try:
             exec(imps)
@@ -91,6 +91,6 @@ if __name__ == "__main__":
     UIClass = QtWidgets.QApplication(sys.argv)
     Login = Login()
     Login.exec_()
-    form = MainUi()
-    form.show()
+    mainGui = MainUi()
+    mainGui.show()
     sys.exit(UIClass.exec_())
